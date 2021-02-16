@@ -148,7 +148,7 @@ export default function NavBar({ isAuth }) {
           </div>
         </div>
       ) : (
-        <div className="button-group flex flex-1 justify-end">
+        <div className="button-group flex justify-end">
           <Link
             to="/login"
             className="border-solid text-sm rounded-full mx-1 py-2 px-9 border-2 border-blue-500 text-blue-500 font-bold"

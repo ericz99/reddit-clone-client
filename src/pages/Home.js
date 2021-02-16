@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useQuery } from '@apollo/client';
+import Loader from 'react-loader-spinner';
 
 import { ME_QUERY } from '../graphql/user';
 import { GET_POSTS } from '../graphql/post';
@@ -22,7 +23,12 @@ export default function Home(props) {
   }, [refetch]);
 
   if (meLoading) return null;
-  if (postLoading) return null;
+  if (postLoading)
+    return (
+      <div className="absolute inset-center">
+        <Loader type="Bars" color="#00BFFF" height={100} width={100} />
+      </div>
+    );
 
   const handleScroll = ({ currentTarget }) => {
     if (
@@ -39,9 +45,13 @@ export default function Home(props) {
 
   return (
     <HomeContainer onScroll={handleScroll} {...props}>
-      {postData.getPosts.docs.map((post, key) => (
-        <Post key={key} post={post} {...props} meData={meData} refetch={refetch} />
-      ))}
+      {postData.getPosts.docs.length > 0 ? (
+        postData.getPosts.docs.map((post, key) => (
+          <Post key={key} post={post} {...props} meData={meData} refetch={refetch} />
+        ))
+      ) : (
+        <div className="mb-2 text-center">No Post Found!</div>
+      )}
     </HomeContainer>
   );
 }

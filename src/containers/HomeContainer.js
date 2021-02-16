@@ -23,7 +23,7 @@ export default function HomeContainer(props) {
       >
         <div className="flex flex-col lg:p-6 lg:flex-row justify-center p-2 bg-gray-300">
           <div className="flex flex-col">
-            <div className="lg:w-640 w-auto border-transparent hover:border-gray-400 cursor-pointer mb-3">
+            <div className="lg:w-640 w-auto border-transparent hover:border-gray-400 mb-3">
               {props.children}
             </div>
           </div>

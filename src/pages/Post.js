@@ -33,7 +33,6 @@ export default function Post(props) {
   });
 
   const { inputs, handleChange, clearInputs } = useInput();
-
   useEffect(() => {
     if (props.location.state) {
       setShouldUpdate(true);

@@ -8,6 +8,8 @@ import Routes from './Routes';
 import Client from './client';
 import reportWebVitals from './reportWebVitals';
 
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={Client}>

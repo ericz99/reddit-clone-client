@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt } from '@fortawesome/free-solid-svg-icons';
+import Loader from 'react-loader-spinner';
 
 import { ME_QUERY } from '../graphql/user';
 import { GET_POSTS } from '../graphql/post';
@@ -12,6 +13,7 @@ import Post from '../components/Post';
 import ProfileContainer from '../containers/ProfileContainer';
 
 export default function Profile(props) {
+  const [isLoading, setLoading] = useState(false);
   const [overview, setOverview] = useState([]);
   const { loading: meLoading, data: meData } = useQuery(ME_QUERY);
   const { loading: commentLoading, data: commentData } = useQuery(GET_COMMENTS);
@@ -21,6 +23,14 @@ export default function Profile(props) {
       limit: 1000, // # TODO: probably gonna have a separate post / comments catalog
     },
   });
+
+  useEffect(() => {
+    if (meLoading || commentLoading || postLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [meLoading, commentLoading, postLoading]);
 
   useEffect(() => {
     refetch();
@@ -42,9 +52,16 @@ export default function Profile(props) {
     };
   }, [meData, postData, commentData, postLoading, commentLoading]);
 
-  if (meLoading) return null;
-  if (postLoading) return null;
-  if (commentLoading) return null;
+  // if (meLoading) return null;
+  // if (postLoading) return null;
+  // if (commentLoading) return null;
+
+  if (isLoading)
+    return (
+      <div className="absolute inset-center">
+        <Loader type="Bars" color="#00BFFF" height={100} width={100} />
+      </div>
+    );
 
   return (
     <ProfileContainer {...props}>
@@ -76,7 +93,7 @@ export default function Profile(props) {
           }
         })
       ) : (
-        <div>no post</div>
+        <div className="text-center">Currently Empty!</div>
       )}
     </ProfileContainer>
   );

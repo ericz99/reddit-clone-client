@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useRef } from 'react';
 import { useQuery } from '@apollo/client';
+import Loader from 'react-loader-spinner';
 
 import { ME_QUERY } from '../graphql/user';
 import { GET_POSTS } from '../graphql/post';
@@ -24,7 +25,12 @@ export default function Community(props) {
   }, [refetch]);
 
   if (meLoading) return null;
-  if (postLoading) return null;
+  if (postLoading)
+    return (
+      <div className="absolute inset-center">
+        <Loader type="Bars" color="#00BFFF" height={100} width={100} />
+      </div>
+    );
 
   const handleScroll = ({ currentTarget }) => {
     if (

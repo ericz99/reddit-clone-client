@@ -73,7 +73,7 @@ export default function Post({ post, refetch, meData, isAuth, ...props }) {
   };
 
   return (
-    <div className="flex mb-2">
+    <div className="flex mb-2 cursor-pointer">
       <div className="bg-gray-200 px-2 py-2 flex flex-col items-center justify-center">
         <button
           type="button"
@@ -144,7 +144,7 @@ export default function Post({ post, refetch, meData, isAuth, ...props }) {
             <span className="text-xs font-bold text-gray-400">Save</span>
           </div>
 
-          {post.author.id === meData.me.id && (
+          {isAuth && post.author.id === meData.me.id && (
             <div className="relative" ref={$dropDownRef} onClick={() => setToggle((prev) => !prev)}>
               <div className="save hover:bg-gray-200 px-2">
                 <FontAwesomeIcon icon={faEllipsisH} className="text-xs text-gray-400" />
