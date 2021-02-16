@@ -1,4 +1,4 @@
-## Reddit Clone
+## Reddit Clone Client
 
 A cool reddit clone.
 
