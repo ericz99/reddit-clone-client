@@ -1,6 +1,6 @@
 ## Reddit Clone Client
 
-A cool reddit clone.
+A cool reddit clone. Click [here](https://naughty-clarke-6f09f3.netlify.app/) to view demo!
 
 > looking for the server code? go to [here](https://github.com/ericz99/reddit-clone-server)
 
