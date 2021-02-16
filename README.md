@@ -2,6 +2,8 @@
 
 A cool reddit clone.
 
+> looking for the server code? go to [here](https://github.com/ericz99/reddit-clone-server)
+
 ## Installation
 
 Reddit Clone requires the following...
