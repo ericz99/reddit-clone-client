@@ -8,6 +8,19 @@ export const GET_POST = gql`
       body
       comments {
         id
+        body
+        post {
+          id
+          title
+          body
+        }
+        author {
+          id
+          email
+          userName
+          createdAt
+        }
+        createdAt
       }
       community {
         id

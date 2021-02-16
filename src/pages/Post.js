@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Loader from 'react-loader-spinner';
 
 import {
   faCaretDown,
@@ -13,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { GET_POST, UPDATE_POST } from '../graphql/post';
-import { GET_COMMENTS, CREATE_COMMENT } from '../graphql/comment';
+import { CREATE_COMMENT } from '../graphql/comment';
 import PostContainer from '../containers/PostContainer';
 import Icon from '../assets/avatar.png';
 import TextArea from '../components/TextArea';
@@ -24,9 +25,8 @@ export default function Post(props) {
   const [shouldUpdate, setShouldUpdate] = useState(false);
   const [createComment] = useMutation(CREATE_COMMENT);
   const [updatePost] = useMutation(UPDATE_POST);
-  const { loading: commentsLoading, data: commentsData, refetch } = useQuery(GET_COMMENTS);
 
-  const { loading: postLoading, data: postData } = useQuery(GET_POST, {
+  const { loading: postLoading, data: postData, refetch } = useQuery(GET_POST, {
     variables: {
       id: props.match.params.id,
     },
@@ -43,8 +43,12 @@ export default function Post(props) {
     }
   }, [props.location, inputs, isMount]);
 
-  if (postLoading) return null;
-  if (commentsLoading) return null;
+  if (postLoading)
+    return (
+      <div className="absolute inset-center">
+        <Loader type="Bars" color="#00BFFF" height={100} width={100} />
+      </div>
+    );
 
   const submitCommentHandler = async (e) => {
     if (props.isAuth) {
@@ -198,8 +202,8 @@ export default function Post(props) {
           <hr />
 
           <div className="flex flex-col p-4">
-            {commentsData.getComments.length > 0 ? (
-              commentsData.getComments.map((comment, key) => {
+            {postData.getPost.comments.length > 0 ? (
+              postData.getPost.comments.map((comment, key) => {
                 if (comment.post.id === props.match.params.id) {
                   return (
                     <div className="flex flex-1 border-b-2" key={key}>
