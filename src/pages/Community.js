@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 
