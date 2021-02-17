@@ -64,7 +64,7 @@ export default function ComContainer({ comData, refetch, ...props }) {
         </div>
       </div>
 
-      <div className="flex-1 h-1/2 bg-gray-300 relative">
+      <div className="overflow-y-auto flex-1 h-1/2 bg-gray-300 relative" onScroll={props.onScroll}>
         <div className="flex flex-col lg:p-6 lg:flex-row justify-center p-2 bg-gray-300">
           <div className="flex flex-col">
             <div className="flex mb-4 bg-white items-center">

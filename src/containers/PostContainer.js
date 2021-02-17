@@ -11,8 +11,10 @@ export default function PostContainer(props) {
   });
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    refetch({
+      name: props.match.params.name,
+    });
+  }, [refetch, props.match.params.name]);
 
   if (loading) return null;
 

@@ -49,6 +49,11 @@ export const GET_COMMUNITY = gql`
           }
           createdAt
         }
+        community {
+          id
+          name
+          createdAt
+        }
         author {
           id
           email
@@ -113,6 +118,11 @@ export const GET_ALL_COMMUNITY = gql`
             userName
             createdAt
           }
+          createdAt
+        }
+        community {
+          id
+          name
           createdAt
         }
         author {

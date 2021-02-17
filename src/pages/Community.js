@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 
@@ -10,7 +10,7 @@ import Post from '../components/Post';
 import ComContainer from '../containers/ComContainer';
 
 export default function Community(props) {
-  // const limitRef = useRef(10);
+  const [limit, setLimit] = useState(10);
   const { loading: meLoading, data: meData } = useQuery(ME_QUERY);
   const { loading: comLoading, data: comData, refetch } = useQuery(GET_COMMUNITY, {
     variables: {
@@ -19,8 +19,12 @@ export default function Community(props) {
   });
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    refetch({
+      variables: {
+        name: props.match.params.name,
+      },
+    });
+  }, [refetch, props.match.params.name]);
 
   if (meLoading) return null;
   if (comLoading)
@@ -30,28 +34,25 @@ export default function Community(props) {
       </div>
     );
 
-  // const handleScroll = ({ currentTarget }) => {
-  //   if (
-  //     Math.round(currentTarget.scrollTop + currentTarget.clientHeight) >= currentTarget.scrollHeight
-  //   ) {
-  //     if (postData.getPosts.hasNextPage) {
-  //       refetch({
-  //         name: props.match.params.name,
-  //         offset: 0,
-  //         limit: (limitRef.current += 10),
-  //       });
-  //     }
-  //   }
-  // };
+  const handleScroll = ({ currentTarget }) => {
+    if (
+      Math.round(currentTarget.scrollTop + currentTarget.clientHeight) >= currentTarget.scrollHeight
+    ) {
+      if (comData.getCommunity.posts.length >= limit) {
+        setLimit((prev) => prev + 10);
+      }
+    }
+  };
 
   return (
     <ComContainer
       loggedInUser={meData ? meData.me : null}
       comData={comData}
       refetch={refetch}
+      onScroll={handleScroll}
       {...props}
     >
-      {comData.getCommunity.posts.map((post, key) => {
+      {comData.getCommunity.posts.slice(0, limit).map((post, key) => {
         return <Post key={key} post={post} {...props} meData={meData} refetch={refetch} />;
       })}
     </ComContainer>
