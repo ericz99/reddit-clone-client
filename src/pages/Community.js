@@ -26,8 +26,7 @@ export default function Community(props) {
     });
   }, [refetch, props.match.params.name]);
 
-  if (meLoading) return null;
-  if (comLoading)
+  if (meLoading || comLoading)
     return (
       <div className="absolute inset-center">
         <Loader type="Bars" color="#00BFFF" height={100} width={100} />

@@ -12,13 +12,20 @@ export default function ComContainer({ comData, refetch, ...props }) {
   const [leaveCommunity] = useMutation(LEAVE_COM);
 
   const handleJoinCom = async (e) => {
-    // # join & refetch the data
-    await Promise.all([joinCommunity({ variables: { id: comData.getCommunity.id } }), refetch()]);
+    if (props.loggedInUser) {
+      // # join & refetch the data
+      await Promise.all([joinCommunity({ variables: { id: comData.getCommunity.id } }), refetch()]);
+    }
   };
 
   const handleLeaveCom = async (e) => {
-    // # leave & refetch the data
-    await Promise.all([leaveCommunity({ variables: { id: comData.getCommunity.id } }), refetch()]);
+    if (props.loggedInUser) {
+      // # leave & refetch the data
+      await Promise.all([
+        leaveCommunity({ variables: { id: comData.getCommunity.id } }),
+        refetch(),
+      ]);
+    }
   };
 
   return (
