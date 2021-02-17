@@ -1,36 +1,24 @@
-import React, { useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import React from 'react';
+import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
-import { GET_COMMUNITY, JOIN_COM, LEAVE_COM } from '../graphql/community';
+import { JOIN_COM, LEAVE_COM } from '../graphql/community';
 
 import InputField from '../components/InputField';
 import Icon from '../assets/avatar.png';
 
-export default function ComContainer(props) {
+export default function ComContainer({ comData, refetch, ...props }) {
   const [joinCommunity] = useMutation(JOIN_COM);
   const [leaveCommunity] = useMutation(LEAVE_COM);
 
-  const { loading, data, refetch } = useQuery(GET_COMMUNITY, {
-    variables: {
-      name: props.match.params.name,
-    },
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
-  if (loading) return null;
-
   const handleJoinCom = async (e) => {
     // # join & refetch the data
-    await Promise.all([joinCommunity({ variables: { id: data.getCommunity.id } }), refetch()]);
+    await Promise.all([joinCommunity({ variables: { id: comData.getCommunity.id } }), refetch()]);
   };
 
   const handleLeaveCom = async (e) => {
     // # leave & refetch the data
-    await Promise.all([leaveCommunity({ variables: { id: data.getCommunity.id } }), refetch()]);
+    await Promise.all([leaveCommunity({ variables: { id: comData.getCommunity.id } }), refetch()]);
   };
 
   return (
@@ -46,14 +34,14 @@ export default function ComContainer(props) {
             />
             <div className="flex-1 ml-2 pt-8 self-center flex">
               <div className="block pr-4">
-                <h1 className="text-4xl font-bold">{data.getCommunity.name}</h1>
+                <h1 className="text-4xl font-bold">{comData.getCommunity.name}</h1>
                 <h2 className="text-xs font-semibold text-gray-500 mt-1">
-                  r/{data.getCommunity.name}
+                  r/{comData.getCommunity.name}
                 </h2>
               </div>
               <div className="flex-1 mt-2">
                 {props.loggedInUser &&
-                data.getCommunity.users.some((x) => x.id === props.loggedInUser.id) ? (
+                comData.getCommunity.users.some((x) => x.id === props.loggedInUser.id) ? (
                   <button
                     type="button"
                     className="leave-btn text-lg text-grey-500 rounded-full bg-yellow-400 text-white block px-8 py-0.5 text-center hover:bg-yellow-500"
@@ -112,7 +100,7 @@ export default function ComContainer(props) {
               </div>
 
               <div className="bg-gray-100 p-4">
-                <p className="description text-sm">{data.getCommunity.description}</p>
+                <p className="description text-sm">{comData.getCommunity.description}</p>
                 {props.isAuth && (
                   <div className="createCommunityBtn mt-4 w-full">
                     <Link

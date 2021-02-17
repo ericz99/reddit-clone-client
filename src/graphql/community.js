@@ -29,6 +29,50 @@ export const GET_COMMUNITY = gql`
       name
       title
       description
+      posts {
+        id
+        title
+        body
+        comments {
+          id
+          body
+          post {
+            id
+            title
+            body
+          }
+          author {
+            id
+            email
+            userName
+            createdAt
+          }
+          createdAt
+        }
+        author {
+          id
+          email
+          userName
+          createdAt
+        }
+        votes {
+          id
+          user {
+            id
+            userName
+            email
+          }
+        }
+        downvotes {
+          id
+          user {
+            id
+            userName
+            email
+          }
+        }
+        createdAt
+      }
       admins {
         id
         userName
@@ -51,6 +95,50 @@ export const GET_ALL_COMMUNITY = gql`
       name
       title
       description
+      posts {
+        id
+        title
+        body
+        comments {
+          id
+          body
+          post {
+            id
+            title
+            body
+          }
+          author {
+            id
+            email
+            userName
+            createdAt
+          }
+          createdAt
+        }
+        author {
+          id
+          email
+          userName
+          createdAt
+        }
+        votes {
+          id
+          user {
+            id
+            userName
+            email
+          }
+        }
+        downvotes {
+          id
+          user {
+            id
+            userName
+            email
+          }
+        }
+        createdAt
+      }
       admins {
         id
         userName
