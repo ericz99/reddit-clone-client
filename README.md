@@ -30,6 +30,15 @@ yarn run start
 ## Todo
 
 - [ ] Refactor code base
+- [ ] Improve voting system
+- [ ] Maybe migrate to SSR instead of CSR
+
+## Demo
+
+[View Here](https://naughty-clarke-6f09f3.netlify.app/)
+
+You may notice a lot of slowness / delays, that's becauses my graphql server is running on heroku and my mongodb is running on a
+free tier instance.
 
 ## Technology Used
 
